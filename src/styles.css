@@ -536,11 +536,12 @@ video {
 /* project grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 18px;
 }
 .card {
   grid-column: span 6;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--line);
@@ -555,12 +556,13 @@ video {
 .card--wide {
   grid-column: span 12;
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 }
 .card--tall {
   grid-row: span 2;
 }
 .card__body {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -639,6 +641,7 @@ video {
 }
 .card__links {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 .link {
@@ -926,6 +929,10 @@ video {
   position: absolute;
   left: 8px;
   bottom: 7px;
+  max-width: calc(100% - 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding: 2px 8px;
   border-radius: 999px;
   background: rgba(15, 14, 12, 0.78);
@@ -1833,7 +1840,7 @@ video {
     grid-column: 1 / -1;
   }
   .card--wide {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .card--wide .media {
     border-right: none;
@@ -1873,13 +1880,25 @@ video {
   }
   .seasonbar {
     top: 76px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 4px;
+  }
+  .seasonbar button {
+    flex: 1 1 calc(33.33% - 6px);
+    padding: 7px 10px;
+    font-size: 0.78rem;
   }
   .nav {
-    padding-left: 16px;
+    padding-left: 14px;
   }
   .nav__links a:not(.nav__cta) {
-    padding: 8px 9px;
-    font-size: 0.82rem;
+    padding: 8px 8px;
+    font-size: 0.8rem;
+  }
+  .nav__cta {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
   }
   .nav__mark span {
     display: none;
@@ -1888,15 +1907,39 @@ video {
     grid-template-columns: 1fr;
   }
   .card,
+  .card--wide,
   .card--tall {
     grid-column: span 12;
     grid-row: auto;
+  }
+  .card__body,
+  .card--wide .card__body {
+    padding: 20px 18px 20px;
+  }
+  .card--wide .media,
+  .media--window,
+  .media--vex,
+  .media--sand {
+    padding: 16px;
+  }
+  .vex__stage {
+    grid-template-columns: 1fr;
+  }
+  .vex__side {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
   }
   .card--tall .media--photo img {
     min-height: 0;
   }
   .media--shots {
-    min-height: 260px;
+    min-height: 230px;
+  }
+  .shot__play {
+    left: 16px;
+    top: 16px;
+    padding: 6px 12px 6px 7px;
+    font-size: 0.75rem;
   }
   .job__toggle,
   .job__toggle--static {

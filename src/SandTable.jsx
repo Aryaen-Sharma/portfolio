@@ -387,7 +387,8 @@ export default function SandTable({ className = "", still = false }) {
     const ctx = canvas.getContext("2d");
 
     function layout() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const mobile = window.innerWidth <= 680;
+      dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 2);
       const css = wrap.clientWidth;
       W = Math.round(css * dpr);
       canvas.width = canvas.height = W;
@@ -402,7 +403,7 @@ export default function SandTable({ className = "", still = false }) {
       ctx.clearRect(0, 0, W, W);
       ctx.drawImage(frame, 0, 0);
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
+      if (dpr > 1.25) ctx.imageSmoothingQuality = "high";
       ctx.drawImage(sim, f, f, S, S);
       ctx.drawImage(overlay, f, f);
       const k = S / N;
